@@ -25,20 +25,10 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 class SharePoint:
-    """
-        Usage: 
-            file_name =  'run.log'
-            file_path = 'D:\\Evollo\\Projetos\\nps-avaliation'
-            sharepoint_path = 'Aprendizado - Python e ML'
-
-            sharepoint = SharePoint()
-            sharepoint.upload_file(sharepoint_path, file_name, file_path)
-    """
 
     def __init__(self):
 
-        self.site_url = 'https://{}.sharepoint.com/sites/{}'.format(
-            ms_tenant, ms_sharepoint_site)
+        self.site_url = 'https://{}.sharepoint.com/sites/{}'.format(ms_tenant, ms_sharepoint_site)
 
     def get_token(self):
 
@@ -60,16 +50,17 @@ class SharePoint:
 
     def upload_file(self, sharepoint_path, file_name, file):
 
-        url = f"{self.site_url}/_api/web/GetFolderByServerRelativeUrl('Shared%20Documents/{sharepoint_path}')/Files/add(url='{file_name}', overwrite=true)"
+        url = f"{self.site_url}/_api/web/GetFolderByServerRelativeUrl('Documentos%20Partilhados/{sharepoint_path}')/Files/add(url='{file_name}', overwrite=true)"
         arquivo_para_subir = file
 
-        r = requests.post(url, headers=self.headers(),
-                          data=arquivo_para_subir, verify=False)
+        r = requests.post(url, headers=self.headers(), data=arquivo_para_subir, verify=False)
+
+        r.raise_for_status()  # Verifica se a requisição foi bem-sucedida
 
         return r.status_code
 
     def read_files(self, sharepoint_path, file_name):
-        url = f"{self.site_url}/_api/web/GetFolderByServerRelativeUrl('Shared%20Documents/{sharepoint_path}')/Files('{file_name}')/$value"
+        url = f"{self.site_url}/_api/web/GetFolderByServerRelativeUrl('Documentos%20Partilhados/{sharepoint_path}')/Files('{file_name}')/$value"
 
         r = requests.get(url, headers=self.headers())
 
@@ -86,7 +77,7 @@ class SharePoint:
 
     def delete_file(self, sharepoint_path, file_name):
 
-        url = f"{self.site_url}/_api/web/GetFolderByServerRelativeUrl('Shared%20Documents/{sharepoint_path}')/Files/add(url='{file_name}', overwrite=true)"
+        url = f"{self.site_url}/_api/web/GetFolderByServerRelativeUrl('Documentos%20Partilhados/{sharepoint_path}')/Files/add(url='{file_name}', overwrite=true)"
 
         r = requests.delete(url, headers=self.headers())
 
@@ -94,7 +85,7 @@ class SharePoint:
 
     def view_files(self, sharepoint_path):
 
-        url = f"{self.site_url}/_api/web/GetFolderByServerRelativeUrl('Shared%20Documents/{sharepoint_path}')/Files"
+        url = f"{self.site_url}/_api/web/GetFolderByServerRelativeUrl('Documentos%20Partilhados/{sharepoint_path}')/Files"
 
         r = requests.get(url, headers=self.headers())
 
