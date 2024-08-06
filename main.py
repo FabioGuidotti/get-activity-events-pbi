@@ -1,3 +1,5 @@
+
+
 from powerbiapi import powerbiAPI
 from transform import json_to_df
 from datetime import date, timedelta
@@ -21,8 +23,7 @@ end_date = data_atual.isoformat() + 'T23:59:59Z'
 
 # Faz Consulta dos eventos do ultimo dia
 print(f"Consultando API Power BI...{now()}")
-eventos = powerbi_api.getActivityEvents(
-    start_date, end_date)
+eventos = powerbi_api.getActivityEvents(start_date, end_date)
 
 # Trata os dados gerados
 print(f"Tratandos os dados...{now()}")
@@ -38,7 +39,6 @@ csv_output.seek(0)
 # Grava os dados no Sharepoint
 print(f"Salvando dados no Sharepoint...{now()}")
 
-sp.upload_file("00.Evollo/" + ms_sharepoint_path + "/05.Acessos PBI",
-               unidecode('activity-events_'+start_date+'_'+end_date+'.csv').replace(':', '_'), csv_output)
+sp.upload_file("10. Integração PBI/00. Logs uso",unidecode('activity-events_'+start_date+'_'+end_date+'.csv').replace(':', '_'), csv_output)
 
 print(f"Fim do processo...{now()}")

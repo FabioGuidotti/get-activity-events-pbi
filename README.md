@@ -3,6 +3,9 @@ Projeto de ETL com o objetivo de coletar tratar e guardar dados de eventos de us
 
 
 # Como usar
+$ docker build -t get-activity-events-pbi .
+$ docker run get-activity-events-pbi
+
 
 
 # Como obter dados via API dos eventos de uso do Power BI (client id,  secret id) 
